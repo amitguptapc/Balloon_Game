@@ -1,7 +1,5 @@
 package Game;
 
-import javafx.scene.media.AudioClip;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.applet.Applet;
@@ -34,6 +32,8 @@ public class Demo implements MouseListener, KeyListener {
     frame.pack();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.setResizable(false);
     Demo.d1 = new Demo();
     panel.setFocusable(true);
     panel.requestFocus();
