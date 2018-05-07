@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
@@ -32,6 +33,15 @@ public class Demo implements MouseListener, KeyListener {
     frame.pack();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
+
+
+    try {
+      Thread.sleep(200);
+    } catch (InterruptedException e) {
+    }
+
+
+
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     frame.setResizable(false);
     Demo.d1 = new Demo();
@@ -73,15 +83,19 @@ public class Demo implements MouseListener, KeyListener {
       Demo.yLoc[i] = 700 + Demo.ran.nextInt(1000);
     }
 
+    Image bigImage=new BufferedImage(700,700,BufferedImage.TYPE_INT_RGB);
+    Graphics imageGraphics=bigImage.getGraphics();
+
     while (true) {
       try {
         Thread.sleep(70);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
+      g.drawImage(bigImage,0,0,null);
       if (Demo.crashCount == 1 && Demo.crashed) {
         panel.removeMouseListener(Demo.d1);
-        g.drawImage(crashImage, 200, 200, null);
+        imageGraphics.drawImage(crashImage, 200, 200, null);
         continue;
       }
       if (Demo.crashCount == 2 && !Demo.crashed) {
@@ -96,11 +110,11 @@ public class Demo implements MouseListener, KeyListener {
 
       if (Demo.paused) {
         panel.removeMouseListener(Demo.d1);
-        g.drawImage(pauseImage, 220, 250, null);
+        imageGraphics.drawImage(pauseImage, 220, 250, null);
         continue;
       }
 
-      g.drawImage(bgImage, 0, -1, null);
+      imageGraphics.drawImage(bgImage, 0, -1, null);
       for (int i = 0; i < 12; i++) {
         if (Demo.yLoc[i] < -150) {
           Demo.xLoc[i] = Demo.ran.nextInt(600);
@@ -113,13 +127,13 @@ public class Demo implements MouseListener, KeyListener {
           Demo.crashed=true;
           Demo.crashCount=1;
         }
-        g.drawImage(imageArray[i], Demo.xLoc[i], Demo.yLoc[i], null);
-        g.drawImage(imageArray[i], Demo.xLoc[i], Demo.yLoc[i], null);
+        imageGraphics.drawImage(imageArray[i], Demo.xLoc[i], Demo.yLoc[i], null);
+        imageGraphics.drawImage(imageArray[i], Demo.xLoc[i], Demo.yLoc[i], null);
         Demo.yLoc[i] -= (i*2+5);
       }
-      g.setColor(Color.BLACK);
-      g.setFont(new Font("Arial",Font.BOLD,16));
-      g.drawString("Your Score : "+Demo.score,300,33);
+      imageGraphics.setColor(Color.BLACK);
+      imageGraphics.setFont(new Font("Arial",Font.BOLD,16));
+      imageGraphics.drawString("Your Score : "+Demo.score,300,33);
     }
 
   }
@@ -180,6 +194,7 @@ public class Demo implements MouseListener, KeyListener {
     if (e.getKeyCode() == KeyEvent.VK_ENTER && Demo.crashed) {
       Demo.crashed = false;
       Demo.crashCount = 2;
+      Demo.unBurstBalloon=0;
     }
 
   }
