@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.util.Random;
 
 public class Demo implements MouseListener, KeyListener {
-  private static int xLoc[] = new int[12];
-  private static int yLoc[] = new int[12];
+  private static int[] xLoc = new int[12];
+  private static int[] yLoc = new int[12];
   private static Random ran = new Random();
   private static java.applet.AudioClip burst;
   private static java.applet.AudioClip crash;
@@ -37,7 +37,7 @@ public class Demo implements MouseListener, KeyListener {
 
     try {
       Thread.sleep(200);
-    } catch (InterruptedException e) {
+    } catch (InterruptedException ignored) {
     }
 
 
@@ -74,7 +74,7 @@ public class Demo implements MouseListener, KeyListener {
       e.printStackTrace();
     }
     theme.loop();
-    Image imageArray[] = {balloon1Image, balloon2Image, balloon3Image, balloon4Image,
+    Image[] imageArray = {balloon1Image, balloon2Image, balloon3Image, balloon4Image,
             balloon1Image, balloon2Image, balloon3Image, balloon4Image,
             missileImage, missileImage, missileImage, missileImage};
 
